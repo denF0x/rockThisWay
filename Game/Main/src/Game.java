@@ -75,7 +75,7 @@ public class Game extends Canvas implements Runnable{
     }
 
     public void init() {
-        hero = getUnicorn("Iking.png");
+        hero = getUnicorn("Unicorn.png");
         addKeyListener(new KeyInputHandler());
     }
 
@@ -102,7 +102,7 @@ public class Game extends Canvas implements Runnable{
             return;
         }
         Graphics g = bs.getDrawGraphics();
-        g.setColor(Color.white);
+        g.setColor(Color.pink);
         g.fillRect(0,0,getWidth(),getHeight());
         hero.draw(g, x, y);
         g.dispose();

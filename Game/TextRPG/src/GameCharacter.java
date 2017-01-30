@@ -23,6 +23,9 @@ public class GameCharacter implements Cloneable {
     protected int defense;
 
     //дополнительные параметры
+    protected int defaultStrength;
+    protected int defaultDexterity;
+    protected int defaultEndurance;
     protected int strength;
     protected int dexterity;
     protected int endurance;
@@ -41,6 +44,8 @@ public class GameCharacter implements Cloneable {
         return life;
     }
 
+    protected Inventory myInventory;
+
     //параметры персонажа
 
     public GameCharacter(String _charClass, String _name, int _strength, int _dexterity, int _endurance){
@@ -49,6 +54,9 @@ public class GameCharacter implements Cloneable {
         strength = _strength;
         dexterity = _dexterity;
         endurance = _endurance;
+        defaultStrength = _strength;
+        defaultDexterity = _dexterity;
+        defaultEndurance = _endurance;
         calculateSecondaryParameters();
         level = 1;
         hp = hpMax;
@@ -67,7 +75,7 @@ public class GameCharacter implements Cloneable {
     }
 
     //инфа о персонаже
-    public void ShowInfo(){
+    public void showInfo(){
         System.out.println("Имя: " + name + "\nЗдоровье: " + hp + "/" + hpMax + " Уровень: " + level);
     }
 
@@ -103,8 +111,8 @@ public class GameCharacter implements Cloneable {
         //20 -> 16..24
         int minAttack = (int)(attack * 0.8f);
         int deltaAttack = (int)(attack * 0.4f);
-        int currentAttack = minAttack + GameClass.rand.nextInt(deltaAttack);
-        if(GameClass.rand.nextInt(100) < critChance)
+        int currentAttack = minAttack + Utils.rand.nextInt(deltaAttack);
+        if(Utils.rand.nextInt(100) < critChance)
         {
             currentAttack = (int)(currentAttack * critMultiplier);
             System.out.println(name + " нанес критический урон в размере " + currentAttack + " ед. урона");
@@ -116,13 +124,13 @@ public class GameCharacter implements Cloneable {
     }
     //а этот отвечает за получение урона и смерть
     public void getDamage(int _inputDamage){
-        if (GameClass.rand.nextInt(100) < avoidChance){
+        if (Utils.rand.nextInt(100) < avoidChance){
             System.out.println(name + " увернулся от атаки и получил 0 ед. урона");
         } else {
-                _inputDamage -= GameClass.rand.nextInt(defense);
+                _inputDamage -= Utils.rand.nextInt(defense);
             if (blockStance) {
                 System.out.println(name + " заблокировал часть урона в защитной стойке");
-                _inputDamage -= GameClass.rand.nextInt(defense);
+                _inputDamage -= Utils.rand.nextInt(defense);
             }
             if (_inputDamage < 0) _inputDamage = 0;
             System.out.println(name + " получил " + _inputDamage + " ед. урона");
@@ -140,9 +148,16 @@ public class GameCharacter implements Cloneable {
         {
             case "Бутылка здоровья":
                 cure(50);
-                System.out.println(name + "повысил здоровья на 50 единиц" );
+                System.out.println(name + " повысил здоровья на 50 единиц. Здоровье: " + hp );
                 break;
+            case "Слабый камень здоровья":
+                cure(20);
+                System.out.println(name + " лизнул камень и восстановил 20 ед. здоровья. Здоровье: " + hp   );
         }
     }
 
+    public void fullHeal(){
+        hp = hpMax;
+        System.out.println("Здоровье персонажа " + name + " полностью восстановлено");
+    }
 }
