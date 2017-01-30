@@ -12,6 +12,14 @@ public class Inventory {
         inv = new ArrayList<>();
 
     }
+    public void spendSomeCoins(int amount){
+        gold -= amount;
+    }
+
+    public boolean isCoinsEnough(int amount){
+        if (gold >= amount) return true;
+        return false;
+    }
 
     public void addSomeCoins (int amount){
         gold += amount;

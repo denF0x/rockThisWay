@@ -3,7 +3,7 @@
  */
 public class Item {
     private String name;
-    public static enum ItemType {Consumables, InfinityConsumables, Quests, Armor, Weapon};
+    public static enum ItemType {Consumables, InfinityConsumables, Quests, DefaultConsumables, Armor, Weapon};
     private ItemType type;
 
     public ItemType getType(){

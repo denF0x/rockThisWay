@@ -153,6 +153,22 @@ public class GameCharacter implements Cloneable {
             case "Слабый камень здоровья":
                 cure(20);
                 System.out.println(name + " лизнул камень и восстановил 20 ед. здоровья. Здоровье: " + hp   );
+                break;
+            case "Огнеупорный лифчик":
+                System.out.println(Utils.answerForAllQuestions);
+                break;
+            case "Черный большой елдак":
+                System.out.println(Utils.answerForAllQuestions);
+                break;
+            case "Гигантские шары кролика (дарует удачу)":
+                System.out.println(Utils.answerForAllQuestions);
+                break;
+            case "Карта, ведущая к острову амазонок":
+                System.out.println(Utils.answerForAllQuestions + ". Но знайте, что тут будет чумовой квест");
+                break;
+            case "Точильный камень":
+                System.out.println(Utils.answerForAllQuestions + ". И эта функция будет уже в следующем");
+                break;
         }
     }
 
@@ -160,4 +176,5 @@ public class GameCharacter implements Cloneable {
         hp = hpMax;
         System.out.println("Здоровье персонажа " + name + " полностью восстановлено");
     }
+
 }

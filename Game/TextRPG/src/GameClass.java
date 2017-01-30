@@ -11,6 +11,7 @@ public class GameClass {
     private Hero mainHero;
     private Monster currentMonster;
     private GameMap map;
+    private InGameShop shop;
     private int currentRound;
     private int inpInt;
 
@@ -23,6 +24,7 @@ public class GameClass {
     //основной игровой цикл
     public void mainGameLoop() {
         map = new GameMap();
+        shop = new InGameShop();
 
         inpInt = 0;
         System.out.println("Игра началась!");
@@ -31,7 +33,7 @@ public class GameClass {
         mainHero.setPosByXAndY(10, 3);
         //сюжетная вставка
         System.out.println(mainHero.getName() + " отправляется в свой первый эпический квест. Авторская команда в лице Дениса, Насти и мерзкой падлы Ванды желает ему удачи");
-        //выход первого врага
+        //выход первого врага. оставил для тестов
         //currentMonster = (Monster)monsterPattern[0].clone();
         //currentMonster.levelUp(6);
         //System.out.println("Первым на арену выходит " + currentMonster.getFullName());
@@ -66,13 +68,18 @@ public class GameClass {
                     battle(mainHero, currentMonster);
                     break;
                 case 6:
-                    mainHero.fullHeal();
+                    setCamp();
                     break;
+            }
+            if(map.getObstValue(mainHero.getX(), mainHero.getY()) == 'S') {
+                shopActions();
             }
             map.updateMap(mainHero.getX(), mainHero.getY());
             map.showMap();
 
-            if (Utils.rand.nextInt(100) < 20) {
+
+
+            if (Utils.rand.nextInt(100) < 2) {
                 currentMonster = (Monster) monsterPattern[Utils.rand.nextInt(3)].clone();
                 System.out.println("На вас внезапно напал " + currentMonster.getName());
                 currentMonster.levelUp(map.getMapOfDangerCoordinates(mainHero.getY(),mainHero.getX()));
@@ -87,7 +94,6 @@ public class GameClass {
             }
         }
     }
-
 
 
     public void selectHero()
@@ -166,6 +172,16 @@ public class GameClass {
         if(!battleMonster.isAlive()) System.out.println("Победил " + battleHero.getName());
     }
 
+    public void shopActions(){
+        shop.showItems();
+        System.out.println("0.Выход из магазина");
+        int numOfBuyingItem = getAction(0,shop.ITEMS_COUNT, "Выберите какой товар вы желаете приобрести: ");
+        if (numOfBuyingItem == 0) return;
+        shop.buyByHero(numOfBuyingItem - 1,mainHero);
+        System.out.println("Желаете приобрести что-то еще?");
+        shopActions();
+    }
+
         //вся инфа по персонажам пока здесь
     private void initGame() {
         heroPattern[0] = new Hero("Knight", "Lancelot", 16, 10, 20);
@@ -177,6 +193,37 @@ public class GameClass {
         monsterPattern[2] = new Monster("Humanoid", "Troll", 16, 12, 1);
 
         currentRound = 1;
+    }
+
+    public void setCamp() {
+        while (true) {
+            int campActions = getAction(0, 5, "Вы развели костер и разбили вокруг него лагерь. Чем вы хотите заняться?\n1.Поспать\n2.Покопаться в инвентаре\n3.Потренироваться в обращении с оружием\n4.Охотиться\n0.Собрать лагерь и отправиться в путь");
+            switch (campActions) {
+                case 1:
+                    mainHero.fullHeal();
+                    break;
+                case 2:
+                    mainHero.myInventory.showAllItems();
+                    int invInput = getAction(0, mainHero.myInventory.getSize(), "Выберите предмет для использования");
+                    String usedItem = mainHero.myInventory.useItem(invInput);
+                    if (usedItem != "") {
+                        System.out.println(mainHero.getName() + " использовал " + usedItem);
+                        mainHero.useItem(usedItem);
+                    } else {
+                        System.out.println(mainHero.getName() + " просто закрыл сумку");
+                    }
+                    break;
+                case 3:
+                    System.out.println(Utils.answerForAllQuestions);
+                    break;
+                case 4:
+                    System.out.println(Utils.answerForAllQuestions);
+                    break;
+                case 0:
+                    System.out.println("Приключение героя продолжилось");
+                    return;
+            }
+        }
     }
 
     //метод для адекватной работы с выбором вариантов

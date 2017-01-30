@@ -45,7 +45,7 @@ public class Hero extends GameCharacter  {
         myInventory = new Inventory();
         myInventory.addToInventory(new Item("Слабый камень здоровья", Item.ItemType.InfinityConsumables));
         myInventory.addToInventory(new Item("Бутылка здоровья", Item.ItemType.Consumables));
-        myInventory.addSomeCoins(1000);
+        myInventory.addSomeCoins(10000);
     }
     //метод, расчитывающий получение опыта за врага и повышение левела
     public void expGain(int _exp){
@@ -74,5 +74,7 @@ public class Hero extends GameCharacter  {
     public void addKillCounter(){
         killedMonsters++;
     }
+
+
 }
 
