@@ -45,13 +45,15 @@ public class Hero extends GameCharacter  {
         myInventory = new Inventory();
         myInventory.addToInventory(new Item("Слабый камень здоровья", Item.ItemType.InfinityConsumables));
         myInventory.addToInventory(new Item("Бутылка здоровья", Item.ItemType.Consumables));
+        myInventory.addToInventory(new Item("Точильный камень", Item.ItemType.InfinityConsumables));
+        myInventory.addToInventory(new Item("Сырое мясо убитого оленя", Item.ItemType.Consumables));
         myInventory.addSomeCoins(10000);
     }
     //метод, расчитывающий получение опыта за врага и повышение левела
     public void expGain(int _exp){
         currentExp += _exp;
         System.out.println(name + " получил " + _exp + " ед. опыта");
-        if(currentExp > expToNextLevel)
+        if(currentExp >= expToNextLevel)
         {
             currentExp -= expToNextLevel;
             expToNextLevel *= 2;
@@ -63,8 +65,11 @@ public class Hero extends GameCharacter  {
             endurance += 1;
             calculateSecondaryParameters();
             hp = hpMax;
-            System.out.println(name + " повысил уровень до " + level);
+            System.out.println(name + " повысил уровень до " + level + " Необходимо опыта до след. уровня: " + expToNextLevel);
         }
+    }
+    public int getLevel() {
+        return level;
     }
 
     public void showInfo(){
@@ -73,6 +78,82 @@ public class Hero extends GameCharacter  {
 
     public void addKillCounter(){
         killedMonsters++;
+        if (killedMonsters % 3 == 0 && killedMonsters !=0 ){
+            calculateSecondaryParameters();
+            System.out.println("Атака героя вернулась в норму и снова равна " + attack + " ед. урона");
+        }
+    }
+
+    public void doHunting(){
+        int huntingDecision = Utils.getAction(0,3, "\n\nГерой отправился на охоту.\n1.Отправиться к водопою и устроить засаду\n2.Поискать лесные тропы, чтобы выследить добычу\n3.Затаиться с верным боевым луком в кустах и надеяться на удачу\n0.Вернуться на дорогу");
+        switch (huntingDecision) {
+            case 1:
+                System.out.println(name + " приходит к водопою и видит большого оленя. Собравшись с силами герой делает рывок и...");
+                if ((dexterity * 5) < 75) {
+                    if (Utils.rand.nextInt(100) < dexterity * 2){
+                        myInventory.addToInventory(new Item("Шкура убитого оленя", Item.ItemType.ForShop));
+                        myInventory.addToInventory(new Item("Сырое мясо убитого оленя", Item.ItemType.Consumables));
+                        System.out.println("... настигает свою жертву. Мясо и шкура убитого оленя добавлены в инвентарь");
+                    } else{
+                        System.out.println("... промахивается. Олень успевает сбежать и спугнуть остальную дичь на водопое, оставляя нашего героя ни с чем.");
+                    }
+                } else {
+                    if (Utils.rand.nextInt(100) < 75){
+                        myInventory.addToInventory(new Item("Шкура убитого оленя", Item.ItemType.ForShop));
+                        myInventory.addToInventory(new Item("Сырое мясо убитого оленя", Item.ItemType.Consumables));
+                        System.out.println("... настигает свою жертву. Мясо и шкура убитого оленя добавлены в инвентарь");
+                    } else{
+                        System.out.println("... промахивается. Олень успевает сбежать и спугнуть остальную дичь на водопое, оставляя нашего героя ни с чем.");
+                    }
+                }
+                break;
+            case 2:
+                System.out.println(name + " отправляется на поиски лесных троп. Спустя пару часов плутаний по лесу он находит свежий след и отправляется за добычей...");
+                if ((endurance * 5) < 75) {
+                    if (Utils.rand.nextInt(100) < endurance * 2){
+                        myInventory.addToInventory(new Item("Шкура убитого оленя", Item.ItemType.ForShop));
+                        myInventory.addToInventory(new Item("Сырое мясо убитого оленя", Item.ItemType.Consumables));
+                        System.out.println("... Поиски оказались не напрасными и охота увенчалась успехом. Мясо и шкура убитого оленя добавлены в инвентарь");
+                    } else{
+                        System.out.println("...Видимо, след был не таким уж и свежим. Да и вообще следопыт из нашего героя так себе. Не лучшее было решение");
+                    }
+                } else {
+                    if (Utils.rand.nextInt(100) < 75){
+                        myInventory.addToInventory(new Item("Шкура убитого оленя", Item.ItemType.ForShop));
+                        myInventory.addToInventory(new Item("Сырое мясо убитого оленя", Item.ItemType.Consumables));
+                        System.out.println("... Поиски оказались не напрасными и охота увенчалась успехом. Мясо и шкура убитого оленя добавлены в инвентарь");
+                    } else{
+                        System.out.println("...Видимо, след был не таким уж и свежим. Да и вообще следопыт из нашего героя так себе. Не лучшее было решение");
+                    }
+                }
+                break;
+            case 3:
+                System.out.println(name + " решил не мудрствовать лукаво и спрятался в кустах. Немного повозившись герою удается удобно разместиться в засаде и практически сразу накопленная усталость берет свое и " + name + " засыпает...");
+                if (Utils.rand.nextInt(100) < 25){
+                    myInventory.addToInventory(new Item("Шкура убитого оленя", Item.ItemType.ForShop));
+                    myInventory.addToInventory(new Item("Сырое мясо убитого оленя", Item.ItemType.Consumables));
+                    System.out.println("... Проснувшись, герой замечает неподалеку молодого оленя. С улыбкой " + name + " натягивает тетиву и поражает свою жертву прямо в сердце. Мясо и шкура убитого оленя добавлены в инвентарь");
+                } else{
+                    System.out.println("... " + name + " просыпается поздним вечером изрядно продрогшим и с осознанием того, что сегодня придется ложиться спать на пустой желудок");
+                }
+                break;
+            case 0:
+                System.out.println("Герой решает, что сейчас не время для охоты");
+                return;
+        }
+    }
+
+    public void doCooking(){
+        myInventory.showAllItems();
+        int invInput = Utils.getAction(0, myInventory.getSize(), "Из чего вы хотите приготовить еду?");
+        String ingred = myInventory.useItem(invInput);
+        if(ingred == "Сырое мясо убитого оленя"){
+            System.out.println("\n\nДоблесный " + name + " пожарил себе мясо. В инвентарь добавлено Жареное мясо убитого оленя");
+            myInventory.addToInventoryAfterWin(new Item("Жареное мясо убитого оленя", Item.ItemType.Consumables));
+        } else{
+            System.out.println("Приготовить что-то съедобное из этого будет не получилось");
+            doCooking();
+        }
     }
 
 

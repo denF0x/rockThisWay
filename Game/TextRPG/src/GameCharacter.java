@@ -92,6 +92,15 @@ public class GameCharacter implements Cloneable {
         }
     }
 
+    public void raiseAttack(int attackRaiser){ //повысили атаку на столько-то едениц. сброс при addKillCounter
+        attack += attackRaiser;
+    }
+
+    public void fullHeal(){
+        hp = hpMax;
+        System.out.println("Здоровье персонажа " + name + " полностью восстановлено");
+    }
+
     public Object clone(){
         try{
             return super.clone();
@@ -167,14 +176,23 @@ public class GameCharacter implements Cloneable {
                 System.out.println(Utils.answerForAllQuestions + ". Но знайте, что тут будет чумовой квест");
                 break;
             case "Точильный камень":
-                System.out.println(Utils.answerForAllQuestions + ". И эта функция будет уже в следующем");
+                raiseAttack(10);
+                System.out.println(name + " использовал на оружии точильный камень и повысил свою атаку на 10 едениц. Текущая атака: " + attack);
+                break;
+            case "Сырое мясо убитого оленя":
+                cure(10);
+                System.out.println(name + " очень неприятно есть сырое мясо, но хотя бы это восстанавливает герою 10 ед. здоровья. Здоровье: " + hp);
+                break;
+            case "Шкура убитого оленя":
+                System.out.println(Utils.answerForAllQuestions);
+                break;
+            case "Жареное мясо убитого оленя":
+                cure(100);
+                System.out.println(name + " не без удовольствия съедает шмат оленины. Это восстанавливает герою 10 ед. здоровья. Здоровье: " + hp);
                 break;
         }
     }
 
-    public void fullHeal(){
-        hp = hpMax;
-        System.out.println("Здоровье персонажа " + name + " полностью восстановлено");
-    }
+
 
 }

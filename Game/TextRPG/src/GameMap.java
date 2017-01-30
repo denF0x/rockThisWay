@@ -6,7 +6,7 @@ public class GameMap {
     private final int msx = 20;
     private final int msy = 6;
     private String[][] map = new String[msy][msx];
-    private int[][] mapOfDanger = new int[msy][msx];
+    //private int[][] mapOfDanger = new int[msy][msx];
     private char[][] obstMap = new char[msy][msx];
 
     public GameMap(){
@@ -24,9 +24,9 @@ public class GameMap {
         return true;
     }
 
-    public int getMapOfDangerCoordinates(int _y, int _x){
-        return mapOfDanger[_y][_x];
-    }
+    //public int getMapOfDangerCoordinates(int _y, int _x){
+     //   return mapOfDanger[_y][_x];
+    //}
 
     public void updateMap(int _hx, int _hy){
         for (int i = 0; i < msy; i++){
@@ -49,14 +49,14 @@ public class GameMap {
         System.out.println("Легенда к карте:\nH - Герой\n* - пустая клетка\nS - магазин\nX - непроходимое препятствие");
     }
 
-    public void buildMapOfDanger(int _cx, int _cy){
+   /* public void buildMapOfDanger(int _cx, int _cy){
         for (int i = 0; i < msy; i++){
             for (int j = 0; j < msx; j++){
                 int dng = (int)Math.sqrt(Math.pow(_cy - i, 2) + Math.pow(_cx - j, 2));
                 mapOfDanger[i][j] = dng;
             }
         }
-    }
+    }*/
 
 
 

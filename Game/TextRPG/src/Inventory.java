@@ -39,6 +39,9 @@ public class Inventory {
         inv.add(_newItem);
         System.out.println("Персонаж получил " + _newItem.getName());
     }
+    public void deleteFromInventory(Item deletableItem){
+        inv.remove(deletableItem);
+    }
 
     public void showAllItems()
     {
@@ -69,10 +72,19 @@ public class Inventory {
         return inv.size();
     }
 
-    public void transferAllItemsToAnotherInventory(Inventory _inv){
+    public void transferAllItemsToAnotherInventory(Inventory invOfPersonWhoGetThisItem){
         for (int i = 0; i < inv.size(); i++){
-            _inv.addToInventoryAfterWin(inv.get(i));
-            _inv.addSomeCoinsAfterWin(gold);
+            invOfPersonWhoGetThisItem.addToInventoryAfterWin(inv.get(i));
+            invOfPersonWhoGetThisItem.addSomeCoinsAfterWin(gold);
         }
     }
+    public void transferAllItemsToAnotherInventoryWithTwentyPercentChance(Inventory invOfPersonWhoGetThisItem){
+        //for (int i = 0; i < inv.size(); i ++){
+            invOfPersonWhoGetThisItem.addSomeCoinsAfterWin(gold);
+            if(Utils.rand.nextInt(100) < 20){
+                invOfPersonWhoGetThisItem.addToInventoryAfterWin(inv.get(Utils.rand.nextInt(inv.size())));
+               // invOfPersonWhoGetThisItem.addToInventoryAfterWin(inv.get(i));
+            }
+        }
+
 }
