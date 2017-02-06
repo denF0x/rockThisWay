@@ -72,7 +72,7 @@ public class GameClass {
                     break;
             }
             if (map.getObstValue(mainHero.getX(), mainHero.getY()) == 'S') {
-                shopActions();
+                InGameShop.shopActionsByHero(mainHero);
             }
             map.updateMap(mainHero.getX(), mainHero.getY());
             map.showMap();
@@ -170,15 +170,15 @@ public class GameClass {
         if (!battleMonster.isAlive()) System.out.println("Победил " + battleHero.getName());
     }
 
-    public void shopActions() {
+    /*public void shopActions() {
         shop.showItems();
         System.out.println("0.Выход из магазина");
-        int numOfBuyingItem = Utils.getAction(0, shop.ITEMS_COUNT, "\n\nВыберите какой товар вы желаете приобрести: ");
+        int numOfBuyingItem = Utils.getAction(0, shop.itm.size(), "\n\nВыберите какой товар вы желаете приобрести: ");
         if (numOfBuyingItem == 0) return;
         shop.buyByHero(numOfBuyingItem - 1, mainHero);
         System.out.println("Желаете приобрести что-то еще?");
         shopActions();
-    }
+    }*/
 
     //вся инфа по персонажам пока здесь
     private void initGame() {
@@ -202,7 +202,8 @@ public class GameClass {
                     break;
                 case 2:
                     mainHero.myInventory.showAllItems();
-                    int invInput = Utils.getAction(0, mainHero.myInventory.getSize(), "\n\nВыберите предмет для использования");
+                    int invInput = Utils.getAction(0, mainHero.myInventory.getSize(), "\n\nСодержимое инвентаря:");
+                    mainHero.myInventory.showAllItems();
                     String usedItem = mainHero.myInventory.useItem(invInput);
                     if (usedItem != "") {
                         System.out.println(mainHero.getName() + " использовал " + usedItem);
@@ -227,21 +228,3 @@ public class GameClass {
         }
     }
 }
-//здесь у нас мусор, который жалко выбросить:
-/*int desOnMainMap = getAction(1, 5, "Что вы хотите сделать дальше?\n1. Следующий бой\n2.Перейти в более опасную локацию\n3.Перейти в город\n4.Отдохнуть\n5.Выход из игры");
-            switch (desOnMainMap) {
-                case 1:
-                    currentMonster = (Monster) monsterPattern[Utils.rand.nextInt(3)].clone();
-                    currentMonster.levelUp(mainHero.getDangerofZone());
-                    battle(mainHero, currentMonster);
-                    break;
-
-                case 2:
-                    mainHero.goToDangerousZone();
-                    break;
-                case 4:
-                    mainHero.fullHeal();
-                    break;
-            }
-            if(!mainHero.isAlive()) break;
-        }*/

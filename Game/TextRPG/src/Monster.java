@@ -6,7 +6,7 @@ public class Monster extends GameCharacter {
         super(_charClass, _name, _strength, _dexterity, _endurance);
         myInventory = new Inventory();
         myInventory.addSomeCoins(Utils.rand.nextInt(100));
-        myInventory.addToInventory(new Item("Бутылка здоровья", Item.ItemType.Consumables));
+        myInventory.addToInventory(Items.smallElicsirOfHealth);
     }
 
     public void levelUp (int _level){

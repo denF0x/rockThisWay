@@ -5,7 +5,7 @@ import java.util.ArrayList;
  */
 public class Inventory {
     private int gold;
-    ArrayList<Item> inv; //содержимое инвенторя
+    ArrayList<Items> inv; //содержимое инвенторя
 
     public Inventory(){
         gold = 0;
@@ -30,17 +30,17 @@ public class Inventory {
         System.out.println("Персонаж получил " + amount + " золота. Всего " + gold + " золота");
     }
 
-    public void addToInventory(Item _newItem){
-        inv.add(_newItem);
+    public void addToInventory(Items _newItems){
+        inv.add(_newItems);
     }
 
 
-    public void addToInventoryAfterWin(Item _newItem){
-        inv.add(_newItem);
-        System.out.println("Персонаж получил " + _newItem.getName());
+    public void addToInventoryAfterWin(Items _newItems){
+        inv.add(_newItems);
+        System.out.println("Персонаж получил " + _newItems.getName());
     }
-    public void deleteFromInventory(Item deletableItem){
-        inv.remove(deletableItem);
+    public void deleteFromInventory(Items deletableItems){
+        inv.remove(deletableItems);
     }
 
     public void showAllItems()
@@ -58,12 +58,20 @@ public class Inventory {
         System.out.println("Золото: " + gold);
     }
 
+    /*public String choseItem(int itemID){
+        if (itemID == 0){
+            return "";
+        }
+        Utils.getAction(0,inv.size(),"Что вы желаете сделать с этим предметом?")
+        String a = inv.get(itemID - 1).getName();
+    } */
+
     public String useItem(int _itemID)
     {
         if (_itemID == 0)
             return "";
         String a = inv.get(_itemID - 1).getName();
-        if (inv.get(_itemID - 1).getType() == Item.ItemType.Consumables)
+        if (inv.get(_itemID - 1).getType() == Items.ItemType.Consumables)
         inv.remove(_itemID - 1);
         return a;
     }

@@ -155,11 +155,15 @@ public class GameCharacter implements Cloneable {
     {
         switch (_item)
         {
+            case "Большой эликсир здоровья":
+                cure(150);
+                System.out.println(name + " повысил здоровья на 150 единиц. Здоровье: " + hp );
+                break;
             case "Бутылка здоровья":
                 cure(50);
                 System.out.println(name + " повысил здоровья на 50 единиц. Здоровье: " + hp );
                 break;
-            case "Слабый камень здоровья":
+            case "Камень рыцаря":
                 cure(20);
                 System.out.println(name + " лизнул камень и восстановил 20 ед. здоровья. Здоровье: " + hp   );
                 break;
