@@ -1,3 +1,5 @@
+package Game.TextRPG.src;
+
 /**
  * Created by Денис on 27.01.2017.
  */

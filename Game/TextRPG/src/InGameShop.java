@@ -1,3 +1,7 @@
+package Game.TextRPG.src;
+
+import Game.TextRPG.src.Hero;
+
 import java.util.HashMap;
 import java.util.Map;
 
