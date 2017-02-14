@@ -1,5 +1,7 @@
 package Game.TextRPG.src;
 
+import Game.TextRPG.src.Enemies.*;
+
 /**
  * Created by Денис on 26.01.2017.
  */
@@ -11,10 +13,9 @@ public class GameClass {
 
     //параметры основного цикла
     private Hero mainHero;
-    private Monster currentMonster;
+    private Enemy currentEnemy;
     private GameMap map;
     private InGameShop shop;
-    private int currentRound;
     private int inpInt;
 
     //инициализация игры
@@ -35,10 +36,11 @@ public class GameClass {
         mainHero.setPosByXAndY(10, 3);
         //сюжетная вставка
         System.out.println(mainHero.getName() + " отправляется в свой первый эпический квест. Авторская команда в лице Дениса, Насти и мерзкой падлы Ванды желает ему удачи");
+        //currentEnemy = new Goblin(mainHero.getLevel());
+        //currentEnemy = Enemy.randomMonster(mainHero);
         //выход первого врага. оставил для тестов
-        //currentMonster = (Monster)monsterPattern[0].clone();
-        //currentMonster.levelUp(6);
-        //System.out.println("Первым на арену выходит " + currentMonster.getFullName());
+        //System.out.println("Первым на арену выходит " + currentEnemy.getFullName());
+        //new BattleClass(mainHero, currentEnemy);
         //battle(mainHero, currentMonster);
         //map.buildMapOfDanger(10, 3);
         map.updateMap(mainHero.getX(), mainHero.getY());
@@ -65,9 +67,8 @@ public class GameClass {
                         mainHero.moveHero(0, 1);
                     break;
                 case 5:
-                    currentMonster = (Monster) monsterPattern[Utils.rand.nextInt(3)].clone();
-                    currentMonster.levelUp(mainHero.getLevel());
-                    battle(mainHero, currentMonster);
+                    currentEnemy = Enemy.randomMonster(mainHero);
+                    new BattleClass(mainHero, currentEnemy);
                     break;
                 case 6:
                     setCamp();
@@ -80,11 +81,10 @@ public class GameClass {
             map.showMap();
 
 
-            if (Utils.rand.nextInt(100) < 2) {
-                currentMonster = (Monster) monsterPattern[Utils.rand.nextInt(3)].clone();
-                System.out.println("На вас внезапно напал " + currentMonster.getName());
-                currentMonster.levelUp(mainHero.getLevel());
-                battle(mainHero, currentMonster);
+            if (Utils.rand.nextInt(100) < 5) {
+                currentEnemy = Enemy.randomMonster(mainHero);
+                System.out.println("На вас внезапно напал " + currentEnemy.getName());
+                new BattleClass(mainHero, currentEnemy);
                 map.updateMap(mainHero.getX(), mainHero.getY());
                 map.showMap();
             }
@@ -108,7 +108,54 @@ public class GameClass {
         System.out.println("Вы выбрали " + mainHero.getFullName());
     }
 
-    public void battle(Hero battleHero, Monster battleMonster) {
+
+    //вся инфа по персонажам пока здесь
+    private void initGame() {
+        heroPattern[0] = new Hero("Knight", "Lancelot", 16, 10, 20);
+        heroPattern[1] = new Hero("Barbarian", "Konan", 20, 5, 20);
+        heroPattern[2] = new Hero("Dwarf", "Gimli", 18, 7, 20);
+
+    }
+
+    public void setCamp() {
+        while (true) {
+            int campActions = Utils.getAction(0, 5, "\n\nВы развели костер и разбили вокруг него лагерь. Чем вы хотите заняться?\n1.Поспать\n2.Покопаться в инвентаре\n3.Потренироваться в обращении с оружием\n4.Охотиться\n5.Готовить\n0.Собрать лагерь и отправиться в путь");
+            switch (campActions) {
+                case 1:
+                    mainHero.fullHeal();
+                    break;
+                case 2:
+                    mainHero.myInventory.showAllItems();
+                    int invInput = Utils.getAction(0, mainHero.myInventory.getSize(), "\n\nСодержимое инвентаря:");
+                    mainHero.myInventory.showAllItems();
+                    String usedItem = mainHero.myInventory.useItem(invInput);
+                    if (usedItem != "") {
+                        System.out.println(mainHero.getName() + " использовал " + usedItem);
+                        mainHero.useItem(usedItem);
+                    } else {
+                        System.out.println(mainHero.getName() + " просто закрыл сумку");
+                    }
+                    break;
+                case 3:
+                    System.out.println(Utils.answerForAllQuestions);
+                    break;
+                case 4:
+                    mainHero.doHunting();
+                    break;
+                case 5:
+                    mainHero.doCooking();
+                    break;
+                case 0:
+                    System.out.println("Приключение героя продолжилось");
+                    return;
+            }
+        }
+    }
+}
+
+
+        //СТАРЫЙ МЕТОД БИТВЫ. УДАЛЯТЬ ПОКА ЖАЛКО
+    /*public void battle(Hero battleHero, Monster battleMonster) {
         //вся магия здесь. UPD: Здесь всего лишь боевка. И то не вся
         currentRound = 1;
         System.out.println("Бой между игроком " + battleHero.getName() + " и монстром " + battleMonster.getName() + " начался!");
@@ -170,7 +217,7 @@ public class GameClass {
             System.out.println(battleHero.getName() + " сбежал с поля боя");
         if (!battleHero.isAlive()) System.out.println("Победил " + battleMonster.getName());
         if (!battleMonster.isAlive()) System.out.println("Победил " + battleHero.getName());
-    }
+    }*/
 
     /*public void shopActions() {
         shop.showItems();
@@ -181,52 +228,3 @@ public class GameClass {
         System.out.println("Желаете приобрести что-то еще?");
         shopActions();
     }*/
-
-    //вся инфа по персонажам пока здесь
-    private void initGame() {
-        heroPattern[0] = new Hero("Knight", "Lancelot", 16, 10, 20);
-        heroPattern[1] = new Hero("Barbarian", "Konan", 20, 5, 20);
-        heroPattern[2] = new Hero("Dwarf", "Gimli", 18, 7, 20);
-
-        monsterPattern[0] = new Monster("Humanoid", "Goblin", 8, 10, 6);
-        monsterPattern[1] = new Monster("Humanoid", "Orc", 12, 6, 10);
-        monsterPattern[2] = new Monster("Humanoid", "Troll", 15, 8, 8);
-
-        currentRound = 1;
-    }
-
-    public void setCamp() {
-        while (true) {
-            int campActions = Utils.getAction(0, 5, "\n\nВы развели костер и разбили вокруг него лагерь. Чем вы хотите заняться?\n1.Поспать\n2.Покопаться в инвентаре\n3.Потренироваться в обращении с оружием\n4.Охотиться\n5.Готовить\n0.Собрать лагерь и отправиться в путь");
-            switch (campActions) {
-                case 1:
-                    mainHero.fullHeal();
-                    break;
-                case 2:
-                    mainHero.myInventory.showAllItems();
-                    int invInput = Utils.getAction(0, mainHero.myInventory.getSize(), "\n\nСодержимое инвентаря:");
-                    mainHero.myInventory.showAllItems();
-                    String usedItem = mainHero.myInventory.useItem(invInput);
-                    if (usedItem != "") {
-                        System.out.println(mainHero.getName() + " использовал " + usedItem);
-                        mainHero.useItem(usedItem);
-                    } else {
-                        System.out.println(mainHero.getName() + " просто закрыл сумку");
-                    }
-                    break;
-                case 3:
-                    System.out.println(Utils.answerForAllQuestions);
-                    break;
-                case 4:
-                    mainHero.doHunting();
-                    break;
-                case 5:
-                    mainHero.doCooking();
-                    break;
-                case 0:
-                    System.out.println("Приключение героя продолжилось");
-                    return;
-            }
-        }
-    }
-}

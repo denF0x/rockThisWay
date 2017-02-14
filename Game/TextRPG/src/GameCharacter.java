@@ -65,6 +65,11 @@ public class GameCharacter implements Cloneable {
         life = true;
         blockStance = false;
     }
+    public GameCharacter(int level){
+        this.level = level;
+        life = true;
+        blockStance = false;
+    }
 
     //расчет базовых параметров через внутриигровые
     public void calculateSecondaryParameters(){

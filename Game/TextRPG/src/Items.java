@@ -29,31 +29,31 @@ public class Items {
     }
     //здесь пока будут все игровые предметы. Не забывай неймить их в соответствующих методах
     //тут Consumables
-    final static Items smallElicsirOfHealth = new Items("Бутылка здоровья", ItemType.Consumables, 100);
-    final static Items bigElicsirOfHealth = new Items("Большой эликсир здоровья", ItemType.Consumables,200);
-    final static Items rawMeatOfDear = new Items("Сырое мясо убитого оленя",ItemType.Consumables, 50);
-    final static Items friedMeatOfDear = new Items("Жареное мясо убитого оленя",ItemType.Consumables,100);
+    public final static Items smallElicsirOfHealth = new Items("Бутылка здоровья", ItemType.Consumables, 100);
+    public final static Items bigElicsirOfHealth = new Items("Большой эликсир здоровья", ItemType.Consumables,200);
+    public final static Items rawMeatOfDear = new Items("Сырое мясо убитого оленя",ItemType.Consumables, 50);
+    public final static Items friedMeatOfDear = new Items("Жареное мясо убитого оленя",ItemType.Consumables,100);
 
     //InfinityConsumables
-    final static Items stoneForBlade = new Items("Точильный камень", ItemType.InfinityConsumables,50);
-    final static Items defaultItemForKnight = new Items("Камень рыцаря", ItemType.InfinityConsumables,200);
-    final static Items defaultItemForBarbarian = new Items("Камень варвара", ItemType.InfinityConsumables,200);
-    final static Items defaultItemForDwarf = new Items("Камень гнома", ItemType.InfinityConsumables,200);
+    public final static Items stoneForBlade = new Items("Точильный камень", ItemType.InfinityConsumables,50);
+    public final static Items defaultItemForKnight = new Items("Камень рыцаря", ItemType.InfinityConsumables,200);
+    public final static Items defaultItemForBarbarian = new Items("Камень варвара", ItemType.InfinityConsumables,200);
+    public final static Items defaultItemForDwarf = new Items("Камень гнома", ItemType.InfinityConsumables,200);
 
     //Quests
-    final static Items mapForAmazonianIsland = new Items("Карта, ведущая к острову амазонок", ItemType.Quests,5);
+    public final static Items mapForAmazonianIsland = new Items("Карта, ведущая к острову амазонок", ItemType.Quests,5);
 
     //DefaultConsumables
-    final static Items giantBallsOfRabbit = new Items("Гигантские шары кролика (дарует удачу)", ItemType.DefaultConsumables,500);
+    public final static Items giantBallsOfRabbit = new Items("Гигантские шары кролика (дарует удачу)", ItemType.DefaultConsumables,500);
 
     //Armor
-    final static Items fireBra = new Items("Огнеупорный лифчик", ItemType.Armor,200);
+    public final static Items fireBra = new Items("Огнеупорный лифчик", ItemType.Armor,200);
 
     //Weapon
-    final static Items bigAndBlack = new Items("Черный большой елдак", ItemType.Weapon,300);
+    public final static Items bigAndBlack = new Items("Черный большой елдак", ItemType.Weapon,300);
 
     //тут ForShop
-    final static Items skinOfDear = new Items("Шкура убитого оленя", ItemType.ForShop,150);
+    public final static Items skinOfDear = new Items("Шкура убитого оленя", ItemType.ForShop,150);
 
 
 }
