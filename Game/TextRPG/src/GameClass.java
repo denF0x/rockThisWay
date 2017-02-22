@@ -9,7 +9,6 @@ public class GameClass {
 
     //массивы героев и врагов
     private Hero[] heroPattern = new Hero[3];
-    private Monster[] monsterPattern = new Monster[3];
 
     //параметры основного цикла
     private Hero mainHero;

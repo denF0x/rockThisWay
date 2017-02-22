@@ -1,5 +1,7 @@
 package Game.TextRPG.src;
 
+import Game.TextRPG.src.Enemies.Enemy;
+
 /**
  * Created by Денис on 27.01.2017.
  */
@@ -157,6 +159,7 @@ public class GameCharacter implements Cloneable {
         }
 
     }
+
 
     public void useItem (String _item)
     {
