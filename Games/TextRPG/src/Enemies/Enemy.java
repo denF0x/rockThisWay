@@ -1,6 +1,6 @@
-package Game.TextRPG.src.Enemies;
+package Games.TextRPG.src.Enemies;
 
-import Game.TextRPG.src.*;
+import Games.TextRPG.src.*;
 
 /**
  * Created by Денис on 14.02.2017.
