@@ -1,3 +1,5 @@
+package Learning.ExerciseWithLighter;
+
 import java.util.Scanner;
 
 /**
